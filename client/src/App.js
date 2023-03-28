@@ -4,10 +4,16 @@ import Landing from "./components/layout/Landing";
 import { store } from "./app/store";
 import { loadUser } from "./actions/auth";
 import setAuthToken from "./utils/setAuthToken";
+import PrivateRoute from "./components/routing/PrivateRoute";
 import Navbar from "./components/layout/Navbar";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
+import Dashboard from "./components/dashboard/Dashboard";
 import CreateContact from "./components//contact-form/CreateContact";
+import CreateProfile from "./components/profile-form/CreateProfile";
+import EditProfile from "./components/profile-form/EditProfile";
+import AddExperience from "./components/profile-form/AddExperience";
+import AddEducation from "./components/profile-form/AddEducation";
 
 import "./App.css";
 
@@ -28,6 +34,31 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/contact" element={<CreateContact />} />
+
+        <Route /////////////  Profile Routes  ////////////////
+          path="/create-profile"
+          element={<PrivateRoute component={CreateProfile} />}
+        />
+
+        <Route
+          path="/dashboard"
+          element={<PrivateRoute component={Dashboard} />}
+        />
+
+        <Route
+          path="/edit-profile"
+          element={<PrivateRoute component={EditProfile} />}
+        />
+
+        <Route
+          path="/add-experience"
+          element={<PrivateRoute component={AddExperience} />}
+        />
+
+        <Route
+          path="/add-education"
+          element={<PrivateRoute component={AddEducation} />}
+        />
       </Routes>
     </Router>
   );
