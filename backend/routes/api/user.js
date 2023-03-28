@@ -59,8 +59,6 @@ router.post(
 
       await user.save();
 
-      console.log("New user ObjectId:", user._id); // Log the ObjectId of the new user
-
       // Return jsonwebtoken
       const payload = {
         user: {
