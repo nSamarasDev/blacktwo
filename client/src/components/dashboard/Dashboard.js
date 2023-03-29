@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Spinner from "../../components/layout/Spinner";
 import DashboardActions from "../dashboard/DashboardActions";
+import Education from "./Education";
+import Experience from "./Experience";
 import { getCurrentProfile, deleteAccount } from "../../actions/profile";
 import Alert from "../layout/Alert";
 
@@ -23,22 +25,29 @@ const Dashboard = ({
     <>
       <section className="container">
         <Alert />
-        <h1 className="large text-primary">Dashboard</h1>
+        <h1 className="large text-primary" style={{ marginBottom: "0" }}>
+          Dashboard
+        </h1>
         <p className="lead">
           <i className="fas fa-user"></i> Welcome {user && user.name}
         </p>
         {profile !== null ? (
           <Fragment>
             <DashboardActions />
-
-            <div className="my-2">
-              <button
-                className="btn btn-danger"
-                onClick={() => deleteAccount()}
-              >
-                <i className="fas fa-user-minus"></i>Delete my account
-              </button>
-            </div>
+            <section className="dashboard-container">
+              <h1 className="large text-dark">Container heading</h1>
+              <hr />
+              <Education education={profile.education} />
+              <Experience experience={profile.experience} />
+              <div className="my-2">
+                <button
+                  className="btn btn-danger"
+                  onClick={() => deleteAccount()}
+                >
+                  <i className="fas fa-user-minus"></i>Delete my account
+                </button>
+              </div>
+            </section>
           </Fragment>
         ) : (
           <Fragment>
