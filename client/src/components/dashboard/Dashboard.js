@@ -35,8 +35,15 @@ const Dashboard = ({
           <Fragment>
             <DashboardActions />
             <section className="dashboard-container">
-              <h1 className="large text-dark">Container heading</h1>
+              <h3 className="large text-dark">Profile Information</h3>
               <hr />
+              <h2 style={{ display: "inline-block" }}>
+                Profile Id:{" "}
+                <span style={{ paddingTop: "20px", display: "inline-block" }}>
+                  {profile._id}
+                </span>
+              </h2>
+
               <Education education={profile.education} />
               <Experience experience={profile.experience} />
               <div className="my-2">
