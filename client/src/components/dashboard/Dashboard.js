@@ -35,15 +35,28 @@ const Dashboard = ({
           <Fragment>
             <DashboardActions />
             <section className="dashboard-container">
-              <h3 className="large text-dark">Profile Information</h3>
+              <h1 className="large text-dark">Profile Information</h1>
               <hr />
-              <h2 style={{ display: "inline-block" }}>
-                Profile Id:{" "}
-                <span style={{ paddingTop: "20px", display: "inline-block" }}>
-                  {profile._id}
-                </span>
-              </h2>
-
+              {user.identifiers.isAdmin ? (
+                <Fragment>
+                  <h2 style={{ display: "inline-block" }}>
+                    Profile Id:{" "}
+                    <span
+                      style={{ paddingTop: "20px", display: "inline-block" }}
+                    >
+                      {profile._id}
+                    </span>
+                  </h2>
+                  <h3 style={{ display: "inline-block" }}>
+                    Resource Id:{" "}
+                    <span
+                      style={{ paddingTop: "20px", display: "inline-block" }}
+                    >
+                      {user.identifiers.resource_id}
+                    </span>
+                  </h3>
+                </Fragment>
+              ) : null}
               <Education education={profile.education} />
               <Experience experience={profile.experience} />
               <div className="my-2">
