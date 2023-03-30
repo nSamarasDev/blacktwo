@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { body, validationResult } = require("express-validator");
 const slugify = require("slugify");
+const nodemailer = require("nodemailer");
 const auth = require("../../middleware/auth");
 const Contact = require("../../models/Contact");
 
@@ -31,6 +32,31 @@ router.post(
 
       // Save the contact to the database
       await newContact.save();
+
+      // Send email notification
+      const transporter = nodemailer.createTransport({
+        host: process.env.SMTP_HOST,
+        port: process.env.SMTP_PORT,
+        auth: {
+          user: process.env.SMTP_EMAIL,
+          pass: process.env.SMTP_PASSWORD,
+        },
+      });
+
+      const mailOptions = {
+        from: process.env.SMTP_EMAIL,
+        to: "n.samaras4@outlook.com",
+        subject: "New contact form submission",
+        text: `Name: ${newContact.name}\nEmail: ${newContact.email}\nDescription: ${newContact.description}`,
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Email sent: " + info.response);
+        }
+      });
 
       // Return success response
       res.status(201).json(newContact);
