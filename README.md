@@ -1,2 +1,2 @@
 blacktwo is a new project for a new idea.
-that is all. 👻
+that is all. 👻 ##n.samaras4@outlook.com
