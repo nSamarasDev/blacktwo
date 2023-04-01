@@ -18,6 +18,7 @@ import Profiles from "./components/profiles/Profiles";
 import Profile from "./components/profile/Profile";
 import Posts from "./components/posts/Posts";
 import Post from "./components/post/Post";
+import AdminDashboard from "./components/admin/AdminDashboard";
 
 import "./App.css";
 
@@ -72,6 +73,11 @@ const App = () => {
         />
 
         <Route path="/post/:id" element={<PrivateRoute component={Post} />} />
+
+        <Route ///////////////  Adimin Routes  ////////////////
+          path="/admin"
+          element={<PrivateRoute component={AdminDashboard} />}
+        />
       </Routes>
     </Router>
   );
