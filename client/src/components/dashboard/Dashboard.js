@@ -1,7 +1,7 @@
 import React, { useEffect, Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Spinner from "../../components/layout/Spinner";
 import DashboardActions from "../dashboard/DashboardActions";
 import Education from "./Education";
@@ -15,9 +15,15 @@ const Dashboard = ({
   auth: { user },
   profile: { profile, loading },
 }) => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     getCurrentProfile();
-  }, [getCurrentProfile]);
+
+    if (user && user.identifiers.isAdmin) {
+      navigate("/admin");
+    }
+  }, [getCurrentProfile, user]);
 
   return loading && profile === null ? (
     <Spinner />
@@ -34,40 +40,27 @@ const Dashboard = ({
         {profile !== null ? (
           <Fragment>
             <DashboardActions />
-            <section className="dashboard-container">
-              <h1 className="large text-dark">Profile Information</h1>
-              <hr />
-              {user.identifiers.isAdmin ? (
-                <Fragment>
-                  <h2 style={{ display: "inline-block" }}>
-                    Profile Id:{" "}
-                    <span
-                      style={{ paddingTop: "20px", display: "inline-block" }}
-                    >
-                      {profile._id}
-                    </span>
-                  </h2>
-                  <h3 style={{ display: "inline-block" }}>
-                    Resource Id:{" "}
-                    <span
-                      style={{ paddingTop: "20px", display: "inline-block" }}
-                    >
-                      {user.identifiers.resource_id}
-                    </span>
-                  </h3>
-                </Fragment>
-              ) : null}
-              <Education education={profile.education} />
-              <Experience experience={profile.experience} />
-              <div className="my-2">
-                <button
-                  className="btn btn-danger"
-                  onClick={() => deleteAccount()}
-                >
-                  <i className="fas fa-user-minus"></i>Delete my account
-                </button>
-              </div>
-            </section>
+            <div>
+              <section>
+                {user.identifiers.isAdmin ? <Fragment></Fragment> : null}
+                <Education
+                  education={profile.education}
+                  style={{ marginTop: "0.5rem" }}
+                />
+                <Experience
+                  experience={profile.experience}
+                  style={{ marginTop: "0.5rem" }}
+                />
+                <div className="my-2">
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => deleteAccount()}
+                  >
+                    <i className="fas fa-user-minus"></i>Delete my account
+                  </button>
+                </div>
+              </section>
+            </div>
           </Fragment>
         ) : (
           <Fragment>
