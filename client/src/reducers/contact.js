@@ -1,4 +1,10 @@
-import { GET_CONTACT, CONTACT_ERROR } from "../actions/types";
+import {
+  GET_CONTACT,
+  CONTACT_ERROR,
+  GET_CONTACTS,
+  DELETE_CONTACT,
+  CLEAR_CONTACTS,
+} from "../actions/types";
 
 const initialState = {
   contact: null,
@@ -23,6 +29,24 @@ export default function profileReducer(state = initialState, action) {
         error: payload,
         loading: false,
         contact: null,
+      };
+    case GET_CONTACTS:
+      return {
+        ...state,
+        contacts: payload,
+        loading: false,
+      };
+    case DELETE_CONTACT:
+      return {
+        ...state,
+        contacts: state.contacts.filter((contact) => contact._id !== payload),
+        loading: false,
+      };
+    case CLEAR_CONTACTS:
+      return {
+        ...state,
+        contact: null,
+        loading: false,
       };
     default:
       return state;
