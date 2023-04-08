@@ -9,22 +9,9 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
   const authLinks = (
     <ul>
-      <li>
-        <Link
-          to="/posts"
-          className={location.pathname === "/posts" ? "current" : ""}
-        >
-          Discussion
-        </Link>
-      </li>
-      <li>
-        <Link
-          to="/profiles"
-          className={location.pathname === "/profiles" ? "current" : ""}
-        >
-          Profiles
-        </Link>
-      </li>
+      {/* <li>
+        <Link to="/contact">Contact</Link>
+      </li> */}
 
       <li>
         <Link
