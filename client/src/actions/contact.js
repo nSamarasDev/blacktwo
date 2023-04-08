@@ -7,7 +7,7 @@ import {
   UPDATE_CONTACT,
   CLEAR_CONTACTS,
   GET_CONTACTS,
-  DELETE_CONTACT,
+  ACCOUNT_DELETED,
 } from "./types";
 
 export const getCurrentContact = () => async (dispatch) => {
@@ -40,6 +40,26 @@ export const getContacts = () => async (dispatch) => {
 
     dispatch({
       type: GET_CONTACTS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: CONTACT_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
+
+// Get contact by id
+export const getContactById = (userId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/contact/user/${userId}`);
+
+    dispatch({
+      type: GET_CONTACT,
       payload: res.data,
     });
   } catch (error) {
@@ -96,9 +116,9 @@ export const createContact =
   };
 
 // Get profile by id
-export const getContactById = (id) => async (dispatch) => {
+export const getProfileById = (userId) => async (dispatch) => {
   try {
-    const res = await axios.get(`/api/contact/${id}`);
+    const res = await axios.get(`/api/contact/user/${userId}`);
 
     dispatch({
       type: GET_CONTACT,
@@ -117,17 +137,17 @@ export const getContactById = (id) => async (dispatch) => {
 
 // DELETE Account and Contact
 // Delete Education
-export const deleteContact = (id) => async (dispatch) => {
+export const deleteAccount = () => async (dispatch) => {
   if (window.confirm("Are you sure? This cannot be undone")) {
     try {
-      await axios.delete(`/api/contact/${id}`);
+      await axios.delete("/api/contact");
 
       dispatch({
         type: CLEAR_CONTACTS,
       });
 
       dispatch({
-        type: DELETE_CONTACT,
+        type: ACCOUNT_DELETED,
       });
 
       dispatch(setAlert("Your account has been permaanetly deleted"));
